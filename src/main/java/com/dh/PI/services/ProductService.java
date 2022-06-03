@@ -64,6 +64,7 @@ public class ProductService {
         return repository.findAll(pageable).map(ProductResponseDTO::new);
     }
 
+    @Transactional
     public ProductResponseDTO update(ProductRequestDTO productRequestDTO){
         Optional<Product> productEntity = repository.findById(productRequestDTO.getId());
 
@@ -82,6 +83,7 @@ public class ProductService {
         return new ProductResponseDTO(repository.save(productEntity.get()));
     }
 
+    @Transactional
     public ProductResponseDTO addImages(Long id, Set<ImageDTO> images){
         Optional<Product> productEntity = repository.findById(id);
 
@@ -98,6 +100,7 @@ public class ProductService {
         return new ProductResponseDTO(repository.save(productEntity.get()));
     }
 
+    @Transactional
     public void delete(Long id){
         Optional<Product> productEntity = repository.findById(id);
 
@@ -109,6 +112,7 @@ public class ProductService {
 
     }
 
+    @Transactional(readOnly = true)
     public ProductResponseDTO findById(Long id) {
         Optional<Product> productEntity = repository.findById(id);
 
@@ -119,11 +123,13 @@ public class ProductService {
         return new ProductResponseDTO(productEntity.get());
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductResponseDTO> findAllProductsByCategory(String qualification, Pageable pageable){
         return repository.findAllByCategoryQualification(qualification, pageable)
                 .map(ProductResponseDTO::new);
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductResponseDTO> findAllProductsByCity(String name, Pageable pageable) {
         return repository.findAllByCityName(name, pageable).map(ProductResponseDTO::new);
     }
