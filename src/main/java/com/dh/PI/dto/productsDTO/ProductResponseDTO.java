@@ -22,6 +22,8 @@ public class ProductResponseDTO implements Serializable{
 
     private Long id;
     private String name;
+    private Double score;
+    private Integer countScore;
     private String description;
     private Category category;
     private City city;
@@ -32,6 +34,8 @@ public class ProductResponseDTO implements Serializable{
     public ProductResponseDTO(Product product) {
         this.id = product.getId();
         this.name = product.getName();
+        this.score = product.getScore();
+        this.countScore = product.getCount();
         this.description = product.getDescription();
         this.city = product.getCity();
         this.category = product.getCategory();

@@ -25,6 +25,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    private Double score;
+    private Integer count;
     @Column(columnDefinition = "TEXT")
     private String description;
 
@@ -35,6 +38,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL)
+    private List<Classification> classifications = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "product_id")

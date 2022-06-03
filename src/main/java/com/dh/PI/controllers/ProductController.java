@@ -2,8 +2,11 @@ package com.dh.PI.controllers;
 
 
 import com.dh.PI.dto.ImageDTO;
+import com.dh.PI.dto.ScoreDTO;
 import com.dh.PI.dto.productsDTO.ProductRequestDTO;
 import com.dh.PI.dto.productsDTO.ProductResponseDTO;
+import com.dh.PI.model.Product;
+import com.dh.PI.services.ClassificationService;
 import com.dh.PI.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +25,8 @@ public class ProductController {
 
     @Autowired
     private ProductService service;
+    @Autowired
+    private ClassificationService classificationService;
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> create(@RequestBody ProductRequestDTO productRequestDTO){
@@ -71,5 +76,10 @@ public class ProductController {
                                                                           @RequestParam String end){
 
         return ResponseEntity.status(200).body(service.findByNameBetweenDate(cityName,init,end));
+    }
+
+    @PutMapping("/score")
+    public ResponseEntity<ProductResponseDTO> productScore(@RequestBody ScoreDTO scoreDTO){
+        return ResponseEntity.ok().body(classificationService.saveScore(scoreDTO));
     }
 }

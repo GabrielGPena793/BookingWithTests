@@ -22,6 +22,9 @@ import java.util.Arrays;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    public static final String USERS = "USERS";
+    public static final String MANAGERS = "MANAGERS";
+
     @Bean
     public BCryptPasswordEncoder encoder(){
         return new BCryptPasswordEncoder();
@@ -33,8 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .addFilterAfter(new JWTFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/users").hasAnyRole("USERS","MANAGERS")
-                .antMatchers(HttpMethod.POST,"/bookings").hasAnyRole("USERS","MANAGERS")
+                .antMatchers(HttpMethod.GET,"/v1/users").hasAnyRole(USERS, MANAGERS)
+                .antMatchers(HttpMethod.POST,"/v1/bookings").hasAnyRole(USERS, MANAGERS)
+                .antMatchers(HttpMethod.PUT,"/v1/products/score").hasAnyRole(USERS, MANAGERS)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
