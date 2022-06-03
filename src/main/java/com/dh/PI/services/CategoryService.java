@@ -10,6 +10,7 @@ import com.dh.PI.repositories.ProductRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,7 @@ public class CategoryService {
         return new CategoryDTO(repository.save(category));
     }
 
+    @Transactional(readOnly = true)
     public List<CategoryDTO> findAll(){
         return repository.findAll().stream().map(CategoryDTO::new).collect(Collectors.toList());
     }
@@ -68,6 +70,7 @@ public class CategoryService {
 
     }
 
+    @Transactional(readOnly = true)
     public Category findByQualification(String qualification){
 
         Category category = repository.findByQualification(qualification);

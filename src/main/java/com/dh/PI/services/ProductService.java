@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
+    public static final String PRODUCT_NOT_FOUND_FOR_THIS_ID = "Product not found for this id";
     @Autowired
     private ProductRepository repository;
     @Autowired
@@ -69,16 +70,21 @@ public class ProductService {
         Optional<Product> productEntity = repository.findById(productRequestDTO.getId());
 
         if (productEntity.isEmpty()){
-            throw new ResourceNotFoundException("Product not found for this id");
+            throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_FOR_THIS_ID);
         }
 
         BeanUtils.copyProperties(productRequestDTO, productEntity.get());
 
         productEntity.get().setCategory(categoryService.findByQualification(productRequestDTO.getCategory()));
         productEntity.get().setCity(cityService.findByName(productRequestDTO.getCity()));
-        /*productEntity.get().getCharacteristics().addAll(characteristicService
-                .findAllByName(productRequestDTO.getCharacteristics()));*/
 
+        productRequestDTO.getCharacteristics().forEach(chars -> {
+            ProductCharacteristic productCharacteristic = new ProductCharacteristic(chars.getDescription(),
+                    productEntity.get(), characteristicService.findByName(chars.getName()));
+
+            productEntity.get().getProductCharacteristics().add(productCharacteristicRepository
+                    .save(productCharacteristic));
+        });
 
         return new ProductResponseDTO(repository.save(productEntity.get()));
     }
@@ -88,7 +94,7 @@ public class ProductService {
         Optional<Product> productEntity = repository.findById(id);
 
         if (productEntity.isEmpty()){
-            throw new ResourceNotFoundException("Product not found for this id");
+            throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_FOR_THIS_ID);
         }
 
         images.forEach(imageDTO -> {
@@ -105,7 +111,7 @@ public class ProductService {
         Optional<Product> productEntity = repository.findById(id);
 
         if (productEntity.isEmpty()){
-            throw new ResourceNotFoundException("Product not found for this id");
+            throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_FOR_THIS_ID);
         }
 
         repository.delete(productEntity.get());
@@ -117,8 +123,9 @@ public class ProductService {
         Optional<Product> productEntity = repository.findById(id);
 
         if (productEntity.isEmpty()){
-            throw new ResourceNotFoundException("Product not found for this id");
+            throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_FOR_THIS_ID);
         }
+
 
         return new ProductResponseDTO(productEntity.get());
     }
