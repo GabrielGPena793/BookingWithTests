@@ -19,15 +19,15 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @EntityGraph(attributePaths = {"images", "category", "city", "characteristics"})
+    @EntityGraph(attributePaths = {"category", "city", "productCharacteristics"})
     Page<Product> findAll(Pageable pageable);
-    @EntityGraph(attributePaths = {"images", "category", "city", "characteristics"})
+    @EntityGraph(attributePaths = {"images", "category", "city", "productCharacteristics"})
     Optional<Product> findById(Long id);
-    @EntityGraph(attributePaths = {"images", "category", "city", "characteristics"})
+    @EntityGraph(attributePaths = {"images", "category", "city", "productCharacteristics"})
     List<Product> findAllByCategory(Category category);
-    @EntityGraph(attributePaths = {"images", "category", "city", "characteristics"})
+    @EntityGraph(attributePaths = {"images", "category", "city", "productCharacteristics"})
     Page<Product> findAllByCategoryQualification(String qualification, Pageable pageable);
-    @EntityGraph(attributePaths = {"images", "category", "city", "characteristics"})
+    @EntityGraph(attributePaths = {"images", "category", "city", "productCharacteristics"})
     Page<Product> findAllByCityName(String city, Pageable pageable);
 
     @Query("SELECT p FROM Product p JOIN FETCH p.bookings b JOIN FETCH p.city c WHERE c.name = (:cityName) " +

@@ -6,19 +6,18 @@ import com.dh.PI.dto.productsDTO.ProductResponseDTO;
 import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.Image;
 import com.dh.PI.model.Product;
+import com.dh.PI.model.ProductCharacteristic;
+import com.dh.PI.repositories.ProductCharacteristicRepository;
 import com.dh.PI.repositories.ProductRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -37,7 +36,10 @@ public class ProductService {
     private CityService cityService;
     @Autowired
     private CharacteristicService characteristicService;
+    @Autowired
+    private ProductCharacteristicRepository productCharacteristicRepository;
 
+    @Transactional
     public ProductResponseDTO create(ProductRequestDTO productRequestDTO){
 
         Product product = new Product();
@@ -45,12 +47,19 @@ public class ProductService {
         BeanUtils.copyProperties(productRequestDTO, product);
         product.setCategory(categoryService.findByQualification(productRequestDTO.getCategory()));
         product.setCity(cityService.findByName(productRequestDTO.getCity()));
-        product.getCharacteristics().addAll(characteristicService
-                .findAllByName(productRequestDTO.getCharacteristics()));
 
-        return new ProductResponseDTO(repository.save(product));
+        Product productModel = repository.save(product);
+
+        productRequestDTO.getCharacteristics().forEach(chars -> {
+            ProductCharacteristic productCharacteristic = new ProductCharacteristic(chars.getDescription(),
+                    productModel, characteristicService.findByName(chars.getName()));
+            productModel.getProductCharacteristics().add(productCharacteristicRepository.save(productCharacteristic));
+        });
+
+        return new ProductResponseDTO(repository.save(productModel));
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductResponseDTO> findAll(Pageable pageable){
         return repository.findAll(pageable).map(ProductResponseDTO::new);
     }
@@ -66,8 +75,9 @@ public class ProductService {
 
         productEntity.get().setCategory(categoryService.findByQualification(productRequestDTO.getCategory()));
         productEntity.get().setCity(cityService.findByName(productRequestDTO.getCity()));
-        productEntity.get().getCharacteristics().addAll(characteristicService
-                .findAllByName(productRequestDTO.getCharacteristics()));
+        /*productEntity.get().getCharacteristics().addAll(characteristicService
+                .findAllByName(productRequestDTO.getCharacteristics()));*/
+
 
         return new ProductResponseDTO(repository.save(productEntity.get()));
     }

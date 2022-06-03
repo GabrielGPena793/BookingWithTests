@@ -32,7 +32,7 @@ public class LoginService {
         if(user!=null) {
             boolean passwordOk =  encoder.matches(login.getPassword(), user.getPassword());
             if (!passwordOk) {
-                throw new LoginException("Senha inválida para o login: " + login.getEmail());
+                throw new LoginException("Senha inválida, tente novamente!");
             }
             //Estamos enviando um objeto Sessão para retornar mais informações do usuário
             Session session = new Session();

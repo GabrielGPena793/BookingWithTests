@@ -36,15 +36,12 @@ public class Product {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "product_id")
     private List<Image> images = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    @JoinTable(name = "tb_product_characteristics",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "characteristic_id"))
-    private Set<Characteristic> characteristics = new HashSet<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<ProductCharacteristic> productCharacteristics = new HashSet<>();
 
     @OneToMany(mappedBy = "product")
     private List<Booking> bookings = new ArrayList<>();

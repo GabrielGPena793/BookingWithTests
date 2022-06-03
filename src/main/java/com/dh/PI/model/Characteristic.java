@@ -1,6 +1,5 @@
 package com.dh.PI.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,9 +26,8 @@ public class Characteristic {
     @Column(columnDefinition = "TEXT")
     private String icon;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "characteristics")
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "characteristic", cascade = CascadeType.ALL)
+    private Set<ProductCharacteristic> productCharacteristics;
 
     @Override
     public boolean equals(Object o) {

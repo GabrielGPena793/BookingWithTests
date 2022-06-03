@@ -25,7 +25,7 @@ public class UserService {
 
         User user = new User();
         BeanUtils.copyProperties(userRequestDTO, user);
-        user.getRoles().add("USERSS");
+        user.getRoles().add("USERS");
 
         String pass = user.getPassword();
         //criptografando antes de salvar no banco

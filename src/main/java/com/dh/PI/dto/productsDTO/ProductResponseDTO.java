@@ -1,16 +1,16 @@
 package com.dh.PI.dto.productsDTO;
 
-import com.dh.PI.dto.Characteristics.CharacteristicsDTO;
 import com.dh.PI.dto.ImageDTO;
-import com.dh.PI.model.Category;
-import com.dh.PI.model.City;
-import com.dh.PI.model.Product;
+import com.dh.PI.dto.ProductCharacteristicDTO;
+import com.dh.PI.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,8 +26,8 @@ public class ProductResponseDTO implements Serializable{
     private Category category;
     private City city;
     private List<ImageDTO> images;
+    private List<ProductCharacteristicDTO> characteristics;
 
-    private Set<CharacteristicsDTO> characteristics;
 
     public ProductResponseDTO(Product product) {
         this.id = product.getId();
@@ -36,9 +36,9 @@ public class ProductResponseDTO implements Serializable{
         this.city = product.getCity();
         this.category = product.getCategory();
         this.images = product.getImages().stream().map(ImageDTO::new).collect(Collectors.toList());
-        this.characteristics = product.getCharacteristics().stream().map(CharacteristicsDTO::new)
-                .collect(Collectors.toSet());
+        this.characteristics = product.getProductCharacteristics().stream().map(characteristic ->
+                new ProductCharacteristicDTO(characteristic.getCharacteristic().getName(), characteristic.getDescription(),
+                        characteristic.getCharacteristic().getIcon())).collect(Collectors.toList());
     }
-
 
 }

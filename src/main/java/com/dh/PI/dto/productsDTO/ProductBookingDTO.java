@@ -37,8 +37,8 @@ public class ProductBookingDTO implements Serializable{
         this.city = product.getCity();
         this.category = product.getCategory();
         this.images = product.getImages().stream().map(ImageDTO::new).collect(Collectors.toList());
-        this.characteristics = product.getCharacteristics().stream().map(CharacteristicsDTO::new)
-                .collect(Collectors.toSet());
+        /*this.characteristics = product.getCharacteristics().stream().map(CharacteristicsDTO::new)
+                .collect(Collectors.toSet());*/
     }
 
 

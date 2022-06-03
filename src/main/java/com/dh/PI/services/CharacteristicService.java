@@ -52,4 +52,13 @@ public class CharacteristicService {
         return characteristics;
     }
 
+    public Characteristic findByName(String characteristic){
+        Characteristic characteristicModel = repository.findByName(characteristic);
+        if (characteristicModel == null){
+            throw new ResourceNotFoundException("Characteristic not found: " + characteristic);
+        }
+
+        return characteristicModel;
+    }
+
 }
