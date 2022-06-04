@@ -30,6 +30,6 @@ public class UserService {
         String pass = user.getPassword();
         //criptografando antes de salvar no banco
         user.setPassword(encoder.encode(pass));
-        return  new UserResponseDTO(repository.save(user));
+        return new UserResponseDTO(repository.save(user));
     }
 }
