@@ -1,6 +1,6 @@
 package com.dh.PI.dto.productsDTO;
 
-import com.dh.PI.dto.Characteristics.CharacteristicsDTO;
+import com.dh.PI.dto.characteristics.CharacteristicsDTO;
 import com.dh.PI.dto.ImageDTO;
 import com.dh.PI.model.Category;
 import com.dh.PI.model.City;

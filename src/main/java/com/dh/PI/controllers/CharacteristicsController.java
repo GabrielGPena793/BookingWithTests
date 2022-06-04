@@ -1,6 +1,6 @@
 package com.dh.PI.controllers;
 
-import com.dh.PI.dto.Characteristics.CharacteristicsDTO;
+import com.dh.PI.dto.characteristics.CharacteristicsDTO;
 import com.dh.PI.services.CharacteristicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

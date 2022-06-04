@@ -1,6 +1,6 @@
 package com.dh.PI.services;
 
-import com.dh.PI.dto.Characteristics.CharacteristicsDTO;
+import com.dh.PI.dto.characteristics.CharacteristicsDTO;
 import com.dh.PI.exceptions.ResourceAlreadyExistsException;
 import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.Characteristic;

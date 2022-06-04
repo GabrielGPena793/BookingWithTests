@@ -30,7 +30,7 @@ public class LoginService {
     public Session login(Login login) {
         User user = repository.findByEmail(login.getEmail());
         if(user!=null) {
-            boolean passwordOk =  encoder.matches(login.getPassword(), user.getPassword());
+            boolean passwordOk = encoder.matches(login.getPassword(), user.getPassword());
             if (!passwordOk) {
                 throw new LoginException("Senha inválida, tente novamente!");
             }
@@ -40,7 +40,7 @@ public class LoginService {
             //gerando token jwt e colocando na sessão para retornar ao cliente
             JWTObject jwtObject = new JWTObject();
             jwtObject.setIssuedAt(new Date(System.currentTimeMillis()));
-            jwtObject.setExpiration((new Date(System.currentTimeMillis() + SecurityConfig.EXPIRATION)));
+            jwtObject.setExpiration(new Date(System.currentTimeMillis() + SecurityConfig.EXPIRATION));
             jwtObject.setRoles(user.getRoles());
             session.setToken(JWTCreator.create(SecurityConfig.PREFIX, SecurityConfig.KEY, jwtObject));
             return session;
