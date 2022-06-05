@@ -3,6 +3,8 @@ package com.dh.PI.services;
 import com.dh.PI.config.SecurityConfig;
 import com.dh.PI.dto.Login;
 import com.dh.PI.dto.Session;
+import com.dh.PI.exceptions.LoginException;
+import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.User;
 import com.dh.PI.repositories.UserRepository;
 import com.dh.PI.security.JWTObject;
@@ -36,8 +38,7 @@ class LoginServiceTest {
     @Mock
     private UserRepository repository;
 
-
-    Login login;
+    private Login login;
     private User user;
 
 
@@ -62,6 +63,37 @@ class LoginServiceTest {
         assertEquals(user.getName() + " " + user.getLastname(), result.getLogin());
         assertNotNull(result.getToken());
         assertEquals(String.class , result.getToken().getClass());
+    }
+
+
+
+    @Test
+    void whenLoginThrowLoginException(){
+        when(repository.findByEmail(any())).thenReturn(user);
+        when(encoder.matches(any(), any())).thenReturn(false);
+
+        try {
+            Session result = loginService.login(login);
+            fail("should be throw an exception");
+        }catch (Exception ex){
+            assertEquals(LoginException.class, ex.getClass());
+            assertEquals("Senha inválida, tente novamente!", ex.getMessage());
+        }
+
+    }
+
+    @Test
+    void whenLoginThrowResourceNotFoundException(){
+        when(repository.findByEmail(any())).thenReturn(null);
+
+        try {
+            Session result = loginService.login(login);
+            fail("should be throw an exception");
+        }catch (Exception ex){
+            assertEquals(ResourceNotFoundException.class, ex.getClass());
+            assertEquals("Não existe uma conta cadastrada com esse email", ex.getMessage());
+        }
+
     }
 
     public void setupStart(){
