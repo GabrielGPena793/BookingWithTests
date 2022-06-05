@@ -4,7 +4,6 @@ import com.dh.PI.dto.CityDTO;
 import com.dh.PI.exceptions.ResourceAlreadyExistsException;
 import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.City;
-import com.dh.PI.model.Product;
 import com.dh.PI.repositories.CityRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

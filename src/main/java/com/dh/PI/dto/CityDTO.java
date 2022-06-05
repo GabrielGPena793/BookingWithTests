@@ -1,13 +1,10 @@
 package com.dh.PI.dto;
 
-import com.dh.PI.dto.productsDTO.ProductResponseDTO;
 import com.dh.PI.model.City;
-import com.dh.PI.model.Product;
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor

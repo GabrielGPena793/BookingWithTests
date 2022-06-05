@@ -30,8 +30,6 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
     @Autowired
-    private ImageService imageService;
-    @Autowired
     private CategoryService categoryService;
     @Autowired
     private CityService cityService;
