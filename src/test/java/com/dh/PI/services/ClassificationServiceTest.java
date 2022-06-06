@@ -90,7 +90,7 @@ class ClassificationServiceTest {
         when(productRepository.save(any())).thenReturn(product);
 
         try {
-            ProductResponseDTO result = classificationService.saveScore(scoreDTO);
+            classificationService.saveScore(scoreDTO);
             fail("Should be throw a Exception");
         }catch (Exception ex){
             assertEquals(LoginException.class, ex.getClass());
@@ -108,7 +108,7 @@ class ClassificationServiceTest {
 
         scoreDTO.setScore(6.0);
         try {
-            ProductResponseDTO result = classificationService.saveScore(scoreDTO);
+            classificationService.saveScore(scoreDTO);
             fail("Should be throw a Exception");
         }catch (Exception ex){
             assertEquals(LimitExceededException.class, ex.getClass());
@@ -126,7 +126,7 @@ class ClassificationServiceTest {
 
         scoreDTO.setScore(-1.0);
         try {
-            ProductResponseDTO result = classificationService.saveScore(scoreDTO);
+            classificationService.saveScore(scoreDTO);
             fail("Should be throw a Exception");
         }catch (Exception ex){
             assertEquals(LimitExceededException.class, ex.getClass());
