@@ -3,14 +3,11 @@ package com.dh.PI.dto.bookingDTO;
 import com.dh.PI.dto.productsDTO.ProductResponseDTO;
 import com.dh.PI.dto.userDTO.UserResponseDTO;
 import com.dh.PI.model.Booking;
-import com.dh.PI.model.Product;
-import com.dh.PI.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -23,7 +20,6 @@ public class BookingResponseDTO {
     private String startTime;
     private String startDate;
     private String endDate;
-
     private UserResponseDTO user;
     private ProductResponseDTO product;
 

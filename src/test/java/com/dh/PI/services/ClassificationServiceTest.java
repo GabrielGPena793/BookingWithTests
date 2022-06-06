@@ -141,11 +141,12 @@ class ClassificationServiceTest {
         scoreDTO = new ScoreDTO("gabriel@hotmail.com", 1L, 2.0);
         user = new User(1L, "Gabriel", "Gomes", "gabriel@hotmail.com",
                 "1d32sa1das51d35as1", List.of("USERS"));
+
         productOptional = Optional.of(new Product(1L, "Produto1", 0.0, 0, "produto novo",
                 null, null, List.of(new Classification(1L, 1L , 1L , 5.0)),
                 List.of(), Set.of(), List.of()));
 
-        product =new Product(1L, "Produto1", 5.0, 1, "produto novo",
+        product = new Product(1L, "Produto1", 5.0, 1, "produto novo",
                 null, null, List.of(), List.of(), Set.of(), List.of());
 
         classification = new Classification(1L, 1L , 1L , 5.0);

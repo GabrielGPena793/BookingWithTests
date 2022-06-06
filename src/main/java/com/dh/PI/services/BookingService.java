@@ -2,7 +2,6 @@ package com.dh.PI.services;
 
 import com.dh.PI.dto.bookingDTO.BookingRequestDTO;
 import com.dh.PI.dto.bookingDTO.BookingResponseDTO;
-import com.dh.PI.dto.userDTO.UserRequestDTO;
 import com.dh.PI.exceptions.NoHaveBookingsException;
 import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.Booking;
@@ -52,7 +51,6 @@ public class BookingService {
         booking.setUser(user.get());
         booking.setProduct(product.get());
 
-
         return new BookingResponseDTO(repository.save(booking));
     }
 
@@ -98,7 +96,7 @@ public class BookingService {
         List<Booking> bookings = repository.findAllByUser(user.get());
 
         if (bookings.isEmpty()){
-            throw new ResourceNotFoundException("No have booking for this user");
+            throw new NoHaveBookingsException("No have booking for this user");
         }
 
         return bookings.stream().map(BookingResponseDTO::new).collect(Collectors.toList());
