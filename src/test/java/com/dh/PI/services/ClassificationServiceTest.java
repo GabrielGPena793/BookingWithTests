@@ -1,6 +1,5 @@
 package com.dh.PI.services;
 
-import com.dh.PI.dto.Login;
 import com.dh.PI.dto.ScoreDTO;
 import com.dh.PI.dto.productsDTO.ProductResponseDTO;
 import com.dh.PI.exceptions.LimitExceededException;
@@ -15,9 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class ClassificationServiceTest {
 
     @InjectMocks

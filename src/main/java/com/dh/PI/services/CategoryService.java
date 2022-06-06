@@ -57,7 +57,6 @@ public class CategoryService {
     public void delete(Long id){
         Optional<Category> categoryEntity = repository.findById(id);
 
-
         if (categoryEntity.isEmpty()){
             throw new ResourceNotFoundException("Category not found for this id");
         }
