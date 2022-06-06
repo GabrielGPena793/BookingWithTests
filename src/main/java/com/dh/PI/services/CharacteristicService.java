@@ -29,7 +29,7 @@ public class CharacteristicService {
 
         BeanUtils.copyProperties(characteristicsDTO, characteristic);
 
-        return  new CharacteristicsDTO(repository.save(characteristic));
+        return new CharacteristicsDTO(repository.save(characteristic));
     }
 
     public List<Characteristic> findAllByName(Set<String> characters){
@@ -38,10 +38,11 @@ public class CharacteristicService {
         List<String> namesNotMatch = new ArrayList<>();
 
         characters.forEach(character -> {
-            if (repository.findByName(character) == null) {
+            Characteristic characteristic = repository.findByName(character);
+            if (characteristic == null) {
                 namesNotMatch.add(character);
             }else{
-                characteristics.add(repository.findByName(character));
+                characteristics.add(characteristic);
             }
         });
 
