@@ -2,6 +2,7 @@ package com.dh.PI.services;
 
 import com.dh.PI.dto.ScoreDTO;
 import com.dh.PI.dto.productsDTO.ProductResponseDTO;
+import com.dh.PI.exceptions.LimitExceededException;
 import com.dh.PI.exceptions.LoginException;
 import com.dh.PI.model.Classification;
 import com.dh.PI.model.Product;
@@ -29,7 +30,11 @@ public class ClassificationService {
 
         User user = userRepository.findByEmail(dto.getUserEmail());
         if(user == null) {
-            throw new LoginException("Precisa logar para dar pontuação");
+            throw new LoginException("You need to login to give a score");
+        }
+
+        if (dto.getScore() < 0 || dto.getScore() > 5 ){
+            throw new LimitExceededException("The number must be between 0 and 5");
         }
 
         Product product = productRepository.findById(dto.getProductId()).get();
@@ -49,7 +54,6 @@ public class ClassificationService {
             classificationUser.setScore(dto.getScore());
             repository.saveAndFlush(classificationUser);
         }
-
 
         double sum = 0.0;
         for (Classification c : product.getClassifications()) {

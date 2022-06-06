@@ -32,5 +32,4 @@ public class User {
     @Column(name = "role_id")
     private List<String> roles = new ArrayList<>();
 
-
 }
