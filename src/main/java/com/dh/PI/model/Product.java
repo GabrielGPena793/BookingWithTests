@@ -49,7 +49,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductCharacteristic> productCharacteristics = new HashSet<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();
 
     public Product(ProductRequestDTO productRequestDTO) {
