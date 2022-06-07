@@ -2,6 +2,7 @@ package com.dh.PI.services;
 
 import com.dh.PI.dto.bookingDTO.BookingRequestDTO;
 import com.dh.PI.dto.bookingDTO.BookingResponseDTO;
+import com.dh.PI.exceptions.LimitExceededException;
 import com.dh.PI.exceptions.NoHaveBookingsException;
 import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.Booking;
@@ -31,6 +32,7 @@ public class BookingService {
     private ProductRepository productRepository;
 
 
+    @Transactional
     public BookingResponseDTO create(BookingRequestDTO bookingRequestDTO){
 
         Optional<User> user = userRepository.findById(bookingRequestDTO.getUserId());
@@ -44,6 +46,18 @@ public class BookingService {
         if (product.isEmpty()){
             throw new ResourceNotFoundException("Product not found");
         }
+
+        List<Booking> productBookings = repository.findAllByProduct(product.get());
+
+        productBookings.forEach(booking -> {
+
+            if (bookingRequestDTO.getStartDate().isBefore(booking.getEndDate()) && bookingRequestDTO.getStartDate().isAfter(booking.getStartDate())
+                || bookingRequestDTO.getEndDate().isBefore(booking.getEndDate()) && bookingRequestDTO.getEndDate().isAfter(booking.getStartDate())
+                || (bookingRequestDTO.getStartDate().isEqual(booking.getEndDate()) || bookingRequestDTO.getStartDate().isEqual(booking.getStartDate()))
+                || (bookingRequestDTO.getEndDate().isEqual(booking.getEndDate()) || bookingRequestDTO.getEndDate().isEqual(booking.getStartDate()))){
+               throw new LimitExceededException("The car is already booked between these dates");
+            }
+        });
 
         Booking booking = new Booking();
         BeanUtils.copyProperties(bookingRequestDTO, booking);

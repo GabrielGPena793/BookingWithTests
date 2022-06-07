@@ -42,7 +42,7 @@ public class Product {
     @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL)
     private List<Classification> classifications = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private List<Image> images = new ArrayList<>();
 
