@@ -45,4 +45,13 @@ public class CityService {
 
         return city;
     }
+
+    public CityDTO update(CityDTO cityDTO) {
+
+        City cityModel = findByName(cityDTO.getName());
+
+        BeanUtils.copyProperties(cityDTO, cityModel);
+
+        return new CityDTO(repository.saveAndFlush(cityModel));
+    }
 }
