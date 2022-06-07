@@ -25,9 +25,11 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 class CityServiceTest {
 
-    public static final String COUNTRY  = "Brasil";
-    public static final long ID         = 1L;
-    public static final String CITYNAME = "Recife";
+    public static final String COUNTRY      = "Brasil";
+    public static final long ID             = 1L;
+    public static final String CITYNAME     = "Recife";
+    public static final double LONGITUDE    = -43.1890741235295;
+    public static final double LATITUDE     = -22.96879036165036;
 
     @InjectMocks
     private CityService cityService;
@@ -96,6 +98,8 @@ class CityServiceTest {
         assertEquals(ID , result.getId());
         assertEquals(COUNTRY , result.getCountry());
         assertEquals(CITYNAME , result.getName());
+        assertEquals(LATITUDE , result.getLatitude());
+        assertEquals(LONGITUDE , result.getLongitude());
     }
 
     @Test
@@ -113,8 +117,8 @@ class CityServiceTest {
     }
 
     private void  startSetup(){
-        cityDTO = new CityDTO(null, CITYNAME, COUNTRY);
-        city = new City(null, CITYNAME, COUNTRY);
-        cityReturn = new City(ID, CITYNAME, COUNTRY);
+        cityDTO = new CityDTO(null,  CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
+        city = new City(null,  CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
+        cityReturn = new City(ID,  CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
     }
 }

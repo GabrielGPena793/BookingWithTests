@@ -20,10 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class CityControllerTest {
 
-    public static final String COUNTRY  = "Brasil";
-    public static final long ID         = 1L;
-    public static final String CITYNAME = "Recife";
-    public static final int INDEX = 0;
+    public static final String COUNTRY      = "Brasil";
+    public static final long ID             = 1L;
+    public static final String CITYNAME     = "Recife";
+    public static final int INDEX           = 0;
+    public static final double LONGITUDE    = -43.1890741235295;
+    public static final double LATITUDE     = -22.96879036165036;
 
     @InjectMocks
     private CityController controller;
@@ -73,11 +75,13 @@ class CityControllerTest {
         assertEquals(ID, result.getBody().get(INDEX).getId());
         assertEquals(COUNTRY, result.getBody().get(INDEX).getCountry());
         assertEquals(CITYNAME, result.getBody().get(INDEX).getName());
+        assertEquals(LONGITUDE, result.getBody().get(INDEX).getLongitude());
+        assertEquals(LATITUDE, result.getBody().get(INDEX).getLatitude());
     }
 
 
     private void  startSetup(){
-        cityDTO = new CityDTO(null, CITYNAME, COUNTRY);
-        cityDTOReturn = new CityDTO(ID, CITYNAME, COUNTRY);
+        cityDTO = new CityDTO(null, CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
+        cityDTOReturn = new CityDTO(ID, CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
     }
 }
