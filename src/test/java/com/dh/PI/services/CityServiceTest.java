@@ -116,6 +116,20 @@ class CityServiceTest {
 
     }
 
+    @Test
+    void shouldReturnCityDTOWhenUpdateACity() {
+        when(repository.findByName(anyString())).thenReturn(city);
+        when(repository.saveAndFlush(city)).thenReturn(cityReturn);
+
+        CityDTO result = cityService.update(cityDTO);
+
+        assertNotNull(result);
+        assertEquals(CityDTO.class, result.getClass());
+        assertEquals(ID , result.getId());
+        assertEquals(COUNTRY , result.getCountry());
+        assertEquals(CITYNAME , result.getName());
+    }
+
     private void  startSetup(){
         cityDTO = new CityDTO(null,  CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
         city = new City(null,  CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
