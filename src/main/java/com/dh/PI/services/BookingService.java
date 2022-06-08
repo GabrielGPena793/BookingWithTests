@@ -47,17 +47,9 @@ public class BookingService {
             throw new ResourceNotFoundException("Product not found");
         }
 
-        List<Booking> productBookings = repository.findAllByProduct(product.get());
-
-        productBookings.forEach(booking -> {
-
-            if (bookingRequestDTO.getStartDate().isBefore(booking.getEndDate()) && bookingRequestDTO.getStartDate().isAfter(booking.getStartDate())
-                || bookingRequestDTO.getEndDate().isBefore(booking.getEndDate()) && bookingRequestDTO.getEndDate().isAfter(booking.getStartDate())
-                || (bookingRequestDTO.getStartDate().isEqual(booking.getEndDate()) || bookingRequestDTO.getStartDate().isEqual(booking.getStartDate()))
-                || (bookingRequestDTO.getEndDate().isEqual(booking.getEndDate()) || bookingRequestDTO.getEndDate().isEqual(booking.getStartDate()))){
-               throw new LimitExceededException("The car is already booked between these dates");
-            }
-        });
+        if (!repository.carReservations(bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate()).isEmpty()){
+            throw new LimitExceededException("The car is already booked between these dates");
+        }
 
         Booking booking = new Booking();
         BeanUtils.copyProperties(bookingRequestDTO, booking);
