@@ -47,7 +47,8 @@ public class BookingService {
             throw new ResourceNotFoundException("Product not found");
         }
 
-        if (!repository.carReservations(bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate()).isEmpty()){
+        if (!repository.carReservations(bookingRequestDTO.getStartDate(), bookingRequestDTO.getEndDate(),
+                bookingRequestDTO.getProductId()).isEmpty()){
             throw new LimitExceededException("The car is already booked between these dates");
         }
 
