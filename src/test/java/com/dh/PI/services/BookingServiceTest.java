@@ -2,6 +2,7 @@ package com.dh.PI.services;
 
 import com.dh.PI.dto.bookingDTO.BookingRequestDTO;
 import com.dh.PI.dto.bookingDTO.BookingResponseDTO;
+import com.dh.PI.exceptions.LimitExceededException;
 import com.dh.PI.exceptions.NoHaveBookingsException;
 import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.Booking;
@@ -62,6 +63,7 @@ class BookingServiceTest {
     void shouldReturnResponseEntityWhenCreateANewBooking() {
         when(userRepository.findById(any())).thenReturn(optionalUser);
         when(productRepository.findById(any())).thenReturn(optionalProduct);
+        when(repository.carReservations(any(), any(), any())).thenReturn(List.of());
         when(repository.save(any())).thenReturn(booking);
 
         BookingResponseDTO result = bookingService.create(bookingRequestDTO);
@@ -80,6 +82,7 @@ class BookingServiceTest {
     void shouldReturnResourceNotFoundExceptionWhenCreteAndUserNotFound() {
         when(userRepository.findById(any())).thenReturn(Optional.empty());
         when(productRepository.findById(any())).thenReturn(optionalProduct);
+        when(repository.carReservations(any(), any(), any())).thenReturn(List.of(booking));
         when(repository.save(any())).thenReturn(booking);
 
         try {
@@ -95,6 +98,7 @@ class BookingServiceTest {
     void shouldReturnResourceNotFoundExceptionWhenCreateAndProductNotFound() {
         when(userRepository.findById(any())).thenReturn(optionalUser);
         when(productRepository.findById(any())).thenReturn(Optional.empty());
+        when(repository.carReservations(any(), any(), any())).thenReturn(List.of(booking));
         when(repository.save(any())).thenReturn(booking);
 
         try {
@@ -103,6 +107,22 @@ class BookingServiceTest {
         }catch (Exception ex){
             assertEquals(ResourceNotFoundException.class, ex.getClass());
             assertEquals("Product not found", ex.getMessage());
+        }
+    }
+
+    @Test
+    void shouldReturnLimitExceededExceptionWhenCarIsNotAvailableForBooking() {
+        when(userRepository.findById(any())).thenReturn(optionalUser);
+        when(productRepository.findById(any())).thenReturn(optionalProduct);
+        when(repository.carReservations(any(), any(), any())).thenReturn(List.of(booking));
+        when(repository.save(any())).thenReturn(booking);
+
+        try {
+            bookingService.create(bookingRequestDTO);
+            fail("Should return a Exception");
+        }catch (Exception ex){
+            assertEquals(LimitExceededException.class, ex.getClass());
+            assertEquals("The car is already booked between these dates", ex.getMessage());
         }
     }
 
