@@ -5,7 +5,6 @@ import com.dh.PI.dto.ImageDTO;
 import com.dh.PI.dto.ScoreDTO;
 import com.dh.PI.dto.productsDTO.ProductRequestDTO;
 import com.dh.PI.dto.productsDTO.ProductResponseDTO;
-import com.dh.PI.model.Product;
 import com.dh.PI.services.ClassificationService;
 import com.dh.PI.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,16 +57,17 @@ public class ProductController {
     public ResponseEntity<ProductResponseDTO> addImages(@PathVariable Long id, @RequestBody Set<ImageDTO> imageDTOS){
         return ResponseEntity.status(201).body(service.addImages(id, imageDTOS));
     }
+
     @GetMapping("/category")
-    public Page<ProductResponseDTO> findAllProductsByCategory(@RequestParam String qualification,
+    public ResponseEntity<Page<ProductResponseDTO>> findAllProductsByCategory(@RequestParam String qualification,
                                                               @PageableDefault(page = 0, size = 10) Pageable pageable){
-        return service.findAllProductsByCategory(qualification, pageable);
+        return ResponseEntity.status(200).body(service.findAllProductsByCategory(qualification, pageable));
     }
 
     @GetMapping("/city")
-    public Page<ProductResponseDTO> findAllProductsByCity(@RequestParam String name,
+    public ResponseEntity<Page<ProductResponseDTO>> findAllProductsByCity(@RequestParam String name,
                                                               @PageableDefault(page = 0, size = 10) Pageable pageable){
-        return service.findAllProductsByCity(name, pageable);
+        return  ResponseEntity.status(200).body(service.findAllProductsByCity(name, pageable));
     }
 
     @GetMapping("/city/date")

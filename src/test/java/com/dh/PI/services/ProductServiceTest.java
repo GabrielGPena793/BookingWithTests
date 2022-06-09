@@ -65,8 +65,6 @@ class ProductServiceTest {
     private Image image;
     private ImageDTO imageDTO;
 
-
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -251,7 +249,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void shouldReturnResourceNotFoundExceptionWhenfindByIdAndProductNotExists(){
+    void shouldReturnResourceNotFoundExceptionWhenFindByIdAndProductNotExists(){
         when(repository.findById(any())).thenReturn(Optional.empty());
 
         try{
