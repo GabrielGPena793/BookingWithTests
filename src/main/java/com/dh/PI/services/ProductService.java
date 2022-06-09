@@ -113,7 +113,6 @@ public class ProductService {
         }
 
         repository.delete(productEntity.get());
-
     }
 
     @Transactional(readOnly = true)
@@ -123,7 +122,6 @@ public class ProductService {
         if (productEntity.isEmpty()){
             throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_FOR_THIS_ID);
         }
-
 
         return new ProductResponseDTO(productEntity.get());
     }

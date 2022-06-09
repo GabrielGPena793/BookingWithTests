@@ -54,6 +54,7 @@ public class Product {
     public Product(ProductRequestDTO productRequestDTO) {
         this.name = productRequestDTO.getName();
         this.description = productRequestDTO.getDescription();
+
     }
 
     @Override
