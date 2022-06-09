@@ -22,7 +22,7 @@ public class BookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookingResponseDTO>  findById(@PathVariable Long id){
+    public ResponseEntity<BookingResponseDTO> findById(@PathVariable Long id){
         return ResponseEntity.status(200).body(service.findById(id));
     }
 

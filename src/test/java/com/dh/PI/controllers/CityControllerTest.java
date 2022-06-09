@@ -79,6 +79,23 @@ class CityControllerTest {
         assertEquals(LATITUDE, result.getBody().get(INDEX).getLatitude());
     }
 
+    @Test
+    void shouldReturnAnCityDTOWhenUpdateACity() {
+        Mockito.when(cityService.update(cityDTO)).thenReturn(cityDTOReturn);
+
+        ResponseEntity<CityDTO> result = controller.update(cityDTO);
+
+        assertNotNull(result);
+        assertNotNull(result.getBody());
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
+        assertEquals(ResponseEntity.class, result.getClass());
+        assertEquals(CityDTO.class, result.getBody().getClass());
+
+        assertEquals(ID, result.getBody().getId());
+        assertEquals(COUNTRY, result.getBody().getCountry());
+        assertEquals(CITYNAME, result.getBody().getName());
+    }
+
 
     private void  startSetup(){
         cityDTO = new CityDTO(null, CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
