@@ -2,16 +2,15 @@ package com.dh.PI.dto.productsDTO;
 
 import com.dh.PI.dto.ImageDTO;
 import com.dh.PI.dto.ProductCharacteristicDTO;
-import com.dh.PI.model.*;
+import com.dh.PI.model.Category;
+import com.dh.PI.model.City;
+import com.dh.PI.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
