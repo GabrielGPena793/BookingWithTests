@@ -135,8 +135,6 @@ class ClassificationServiceTest {
     }
 
 
-
-
     private void startSetup(){
         scoreDTO = new ScoreDTO("gabriel@hotmail.com", 1L, 2.0);
         user = new User(1L, "Gabriel", "Gomes", "gabriel@hotmail.com",
