@@ -38,7 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/v1/users").hasAnyRole(USERS, MANAGERS)
                 .antMatchers(HttpMethod.POST,"/v1/bookings").hasAnyRole(USERS, MANAGERS)
-                .antMatchers(HttpMethod.PUT,"/v1/products/score").hasAnyRole(USERS, MANAGERS)
+                .antMatchers(HttpMethod.PUT, "/v1/products/score", "/v1/products").hasAnyRole(MANAGERS)
+                .antMatchers(HttpMethod.POST, "/v1/products").hasAnyRole(MANAGERS)
+                .antMatchers(HttpMethod.DELETE, "/v1/products/{id}").hasAnyRole(MANAGERS)
+                .antMatchers(HttpMethod.PATCH, "/v1/products/{id}").hasAnyRole(MANAGERS)
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
