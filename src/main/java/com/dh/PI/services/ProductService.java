@@ -151,4 +151,14 @@ public class ProductService {
         return products.stream().map(ProductResponseDTO::new).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<ProductResponseDTO> findAllBetweenDates(String init, String end) {
+
+        LocalDate initial = LocalDate.parse(init);
+        LocalDate ending = LocalDate.parse(end);
+
+        List<Product> products = repository.findAllProductsBetweenStartDateAndEndDate(initial, ending);
+
+        return products.stream().map(ProductResponseDTO::new).collect(Collectors.toList());
+    }
 }

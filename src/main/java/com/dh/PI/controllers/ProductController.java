@@ -82,4 +82,10 @@ public class ProductController {
     public ResponseEntity<ProductResponseDTO> productScore(@RequestBody ScoreDTO scoreDTO){
         return ResponseEntity.ok().body(classificationService.saveScore(scoreDTO));
     }
+
+    @GetMapping("/date")
+    public ResponseEntity<List<ProductResponseDTO>> findAllBetweenDates(@RequestParam String init,
+                                                                  @RequestParam String end){
+        return ResponseEntity.status(200).body(service.findAllBetweenDates(init, end));
+    }
 }

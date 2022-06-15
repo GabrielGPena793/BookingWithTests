@@ -32,4 +32,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "WHERE (start_date BETWEEN (:dateStart) AND (:dateEnd)) OR (end_date BETWEEN (:dateStart) AND (:dateEnd))) AND city_id = (:cityId)")
     List<Product> findByCityNameBetweenStartDateAndEndDate(@Param("dateStart") LocalDate dateStart, @Param("dateEnd") LocalDate dateEnd, @Param("cityId") Long cityId);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM tb_product " +
+            "WHERE id not in (SELECT DISTINCT product_id FROM tb_booking " +
+            "WHERE (start_date BETWEEN (:dateStart) AND (:dateEnd)) OR (end_date BETWEEN (:dateStart) AND (:dateEnd)))")
+    List<Product> findAllProductsBetweenStartDateAndEndDate(@Param("dateStart") LocalDate dateStart, @Param("dateEnd") LocalDate dateEnd);
+
 }
