@@ -21,4 +21,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> carReservations(@Param("dateStart") LocalDate dateStart, @Param("dateEnd") LocalDate dateEnd,
                                    @Param("id") Long id);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM tb_booking GROUP BY product_id " +
+            "HAVING (start_date BETWEEN (:dateStart) AND (:dateEnd)) OR (end_date BETWEEN (:dateStart) AND (:dateEnd))")
+    List<Booking> reservationsForSpecificDate(@Param("dateStart") LocalDate dateStart, @Param("dateEnd") LocalDate dateEnd);
+
 }

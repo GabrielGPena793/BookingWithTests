@@ -71,11 +71,11 @@ public class ProductController {
     }
 
     @GetMapping("/city/date")
-    public ResponseEntity<List<ProductResponseDTO>> findByNameBetweenDate(@RequestParam String cityName,
+    public ResponseEntity<List<ProductResponseDTO>> findByNameBetweenDate(@RequestParam Long cityId,
                                                                           @RequestParam String init,
                                                                           @RequestParam String end){
 
-        return ResponseEntity.status(200).body(service.findByNameBetweenDate(cityName,init,end));
+        return ResponseEntity.status(200).body(service.findByNameBetweenDate(cityId,init,end));
     }
 
     @PutMapping("/score")

@@ -7,6 +7,7 @@ import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.Image;
 import com.dh.PI.model.Product;
 import com.dh.PI.model.ProductCharacteristic;
+import com.dh.PI.repositories.BookingRepository;
 import com.dh.PI.repositories.ProductCharacteristicRepository;
 import com.dh.PI.repositories.ProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +38,8 @@ public class ProductService {
     private CharacteristicService characteristicService;
     @Autowired
     private ProductCharacteristicRepository productCharacteristicRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Transactional
     public ProductResponseDTO create(ProductRequestDTO productRequestDTO){
@@ -138,12 +141,12 @@ public class ProductService {
     }
 
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true)
-    public List<ProductResponseDTO> findByNameBetweenDate(String cityName, String init, String end){
+    public List<ProductResponseDTO> findByNameBetweenDate(Long cityId, String init, String end){
 
         LocalDate initial = LocalDate.parse(init);
         LocalDate ending = LocalDate.parse(end);
 
-        List<Product> products = repository.findByCityNameBetweenStartDateAndEndDate(cityName, initial, ending);
+        List<Product> products = repository.findByCityNameBetweenStartDateAndEndDate(initial, ending, cityId);
 
         return products.stream().map(ProductResponseDTO::new).collect(Collectors.toList());
     }
