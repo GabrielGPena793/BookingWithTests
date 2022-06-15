@@ -328,6 +328,27 @@ class ProductServiceTest {
         assertEquals("Corre muito", result.get(0).getCharacteristics().get(0).getDescription());
     }
 
+    @Test
+    void findAllBetweenDates() {
+        product.getImages().add(image);
+        product.getProductCharacteristics().add(productCharacteristic);
+        when(repository.findAllProductsBetweenStartDateAndEndDate(any(), any())).thenReturn(List.of(product));
+
+        List<ProductResponseDTO> result = productService.findAllBetweenDates("2022-05-20", "2022-05-26");
+
+        assertNotNull(result);
+        assertEquals(ProductResponseDTO.class, result.get(0).getClass());
+        assertEquals(ID, result.get(0).getId());
+        assertEquals("Produto1", result.get(0).getName());
+        assertEquals(5.0, result.get(0).getScore());
+        assertEquals(2, result.get(0).getCountScore());
+        assertEquals("Produto novo", result.get(0).getDescription());
+        assertEquals(ID, result.get(0).getCategory().getId());
+        assertEquals(ID, result.get(0).getImages().get(0).getId());
+        assertEquals("Motor", result.get(0).getCharacteristics().get(0).getName());
+        assertEquals("Corre muito", result.get(0).getCharacteristics().get(0).getDescription());
+    }
+
     private void startSetup(){
         productCharacteristicDTO = new ProductCharacteristicDTO(NAME, "Corre muito", "motor.png");
         category = new Category(ID, QUALIFICATION, DESCRIPTION, IMAGE_URL);
@@ -357,5 +378,4 @@ class ProductServiceTest {
         productCharacteristic = new ProductCharacteristic(ID, "Corre muito" , product, characteristic);
         productPage = new PageImpl<>(List.of(product));
     }
-
 }

@@ -292,6 +292,30 @@ class ProductControllerTest {
         assertEquals(NAME, result.getBody().getCharacteristics().get(0).getName());
     }
 
+    @Test
+    void findAllBetweenDates() {
+        when(service.findAllBetweenDates(any(), any())).thenReturn(List.of(productResponseDTO));
+
+        ResponseEntity<List<ProductResponseDTO>> result = productController
+                .findAllBetweenDates("2022-03-20","2022-03-28");
+
+        assertNotNull(result);
+        assertNotNull(result.getBody());
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(ResponseEntity.class, result.getClass());
+        assertEquals(ProductResponseDTO.class, result.getBody().get(0).getClass());
+
+        assertEquals(ID, result.getBody().get(0).getId());
+        assertEquals("Produto1", result.getBody().get(0).getName());
+        assertEquals(5.0, result.getBody().get(0).getScore());
+        assertEquals(5, result.getBody().get(0).getCountScore());
+        assertEquals("Produto novo", result.getBody().get(0).getDescription());
+        assertEquals(ID,result.getBody().get(0).getCategory().getId());
+        assertEquals(ID, result.getBody().get(0).getImages().get(0).getId());
+        assertEquals("Motor", result.getBody().get(0).getCharacteristics().get(0).getName());
+        assertEquals("Corre muito", result.getBody().get(0).getCharacteristics().get(0).getDescription());
+    }
+
     private void startSetup(){
         productCharacteristicDTO = new ProductCharacteristicDTO(NAME, "Corre muito", "motor.png");
         Category category = new Category(ID, QUALIFICATION, DESCRIPTION, IMAGE_URL);
@@ -311,4 +335,6 @@ class ProductControllerTest {
         productResponseDTOPage = new PageImpl<>(List.of(productResponseDTO));
         scoreDTO = new ScoreDTO("gabriel@hotmail.com", 1L, 5.0);
     }
+
+
 }
