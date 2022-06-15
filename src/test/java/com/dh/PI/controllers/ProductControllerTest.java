@@ -249,7 +249,7 @@ class ProductControllerTest {
         when(service.findByNameBetweenDate(any(), any(), any())).thenReturn(List.of(productResponseDTO));
 
         ResponseEntity<List<ProductResponseDTO>> result = productController
-                .findByNameBetweenDate(CITYNAME, "2022-03-20","2022-03-28");
+                .findByNameBetweenDate(ID, "2022-03-20","2022-03-28");
 
         assertNotNull(result);
         assertNotNull(result.getBody());
