@@ -9,6 +9,7 @@ import com.dh.PI.model.Image;
 import com.dh.PI.model.Product;
 import com.dh.PI.model.ProductCharacteristic;
 import com.dh.PI.repositories.BookingRepository;
+import com.dh.PI.repositories.CityRepository;
 import com.dh.PI.repositories.ProductCharacteristicRepository;
 import com.dh.PI.repositories.ProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,8 @@ public class ProductService {
     private CategoryService categoryService;
     @Autowired
     private CityService cityService;
+    @Autowired
+    private CityRepository cityRepository;
     @Autowired
     private CharacteristicService characteristicService;
     @Autowired
@@ -137,11 +140,11 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductResponseDTO> findAllProductsByCity(String name, Pageable pageable) {
+    public Page<ProductResponseDTO> findAllProductsByCity(Long id, Pageable pageable) {
 
-        City city = cityService.findByName(name);
+        Optional<City> city = cityRepository.findById(id);
 
-        return repository.findAllByCity(city, pageable).map(ProductResponseDTO::new);
+        return repository.findAllByCity(city.get(), pageable).map(ProductResponseDTO::new);
     }
 
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true)

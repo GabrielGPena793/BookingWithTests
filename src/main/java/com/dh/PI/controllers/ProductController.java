@@ -65,9 +65,9 @@ public class ProductController {
     }
 
     @GetMapping("/city")
-    public ResponseEntity<Page<ProductResponseDTO>> findAllProductsByCity(@RequestParam String name,
+    public ResponseEntity<Page<ProductResponseDTO>> findAllProductsByCity(@RequestParam Long id,
                                                               @PageableDefault(page = 0, size = 10) Pageable pageable){
-        return  ResponseEntity.status(200).body(service.findAllProductsByCity(name, pageable));
+        return  ResponseEntity.status(200).body(service.findAllProductsByCity(id, pageable));
     }
 
     @GetMapping("/city/date")

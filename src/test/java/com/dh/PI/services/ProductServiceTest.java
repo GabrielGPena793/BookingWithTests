@@ -6,6 +6,7 @@ import com.dh.PI.dto.productsDTO.ProductRequestDTO;
 import com.dh.PI.dto.productsDTO.ProductResponseDTO;
 import com.dh.PI.exceptions.ResourceNotFoundException;
 import com.dh.PI.model.*;
+import com.dh.PI.repositories.CityRepository;
 import com.dh.PI.repositories.ProductCharacteristicRepository;
 import com.dh.PI.repositories.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +47,8 @@ class ProductServiceTest {
     private CategoryService categoryService;
     @Mock
     private CityService cityService;
+    @Mock
+    private CityRepository cityRepository;
     @Mock
     private CharacteristicService characteristicService;
     @Mock
@@ -288,10 +291,11 @@ class ProductServiceTest {
     @Test
     void findAllByCity() {
         when(repository.findAllByCity(any(),any())).thenReturn(productPage);
+        when(cityRepository.findById(any())).thenReturn(Optional.of(city));
         product.getProductCharacteristics().add(productCharacteristic);
         product.getImages().add(image);
 
-        Page<ProductResponseDTO> result = productService.findAllProductsByCity(CITYNAME ,pageable);
+        Page<ProductResponseDTO> result = productService.findAllProductsByCity(ID ,pageable);
 
         assertNotNull(result);
         assertEquals(PageImpl.class, result.getClass());

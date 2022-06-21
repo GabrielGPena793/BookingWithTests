@@ -224,7 +224,7 @@ class ProductControllerTest {
     void findAllByCity() {
         when(service.findAllProductsByCity(any(), any())).thenReturn(productResponseDTOPage);
 
-        ResponseEntity<Page<ProductResponseDTO>> result = productController.findAllProductsByCity(CITYNAME, pageable);
+        ResponseEntity<Page<ProductResponseDTO>> result = productController.findAllProductsByCity(ID, pageable);
 
         assertNotNull(result);
         assertNotNull(result.getBody());
