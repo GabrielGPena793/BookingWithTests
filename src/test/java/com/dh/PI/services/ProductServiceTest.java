@@ -287,7 +287,7 @@ class ProductServiceTest {
 
     @Test
     void findAllByCity() {
-        when(repository.findAllByCityName(anyString(),any())).thenReturn(productPage);
+        when(repository.findAllByCity(anyString(),any())).thenReturn(productPage);
         product.getProductCharacteristics().add(productCharacteristic);
         product.getImages().add(image);
 

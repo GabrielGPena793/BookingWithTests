@@ -4,6 +4,7 @@ import com.dh.PI.dto.ImageDTO;
 import com.dh.PI.dto.productsDTO.ProductRequestDTO;
 import com.dh.PI.dto.productsDTO.ProductResponseDTO;
 import com.dh.PI.exceptions.ResourceNotFoundException;
+import com.dh.PI.model.City;
 import com.dh.PI.model.Image;
 import com.dh.PI.model.Product;
 import com.dh.PI.model.ProductCharacteristic;
@@ -137,7 +138,10 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public Page<ProductResponseDTO> findAllProductsByCity(String name, Pageable pageable) {
-        return repository.findAllByCityName(name, pageable).map(ProductResponseDTO::new);
+
+        City city = cityService.findByName(name);
+
+        return repository.findAllByCity(city, pageable).map(ProductResponseDTO::new);
     }
 
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true)
