@@ -38,6 +38,7 @@ class BookingServiceTest {
     public static final LocalDate START_DATE        = LocalDate.of(2022, 6, 6);
     public static final LocalDate END_DATE          = LocalDate.of(2022, 6, 10);
     public static final int INDEX = 0;
+    public static final String EMAIL = "gabriel@hotmail.com";
 
     @InjectMocks
     private BookingService bookingService;
@@ -53,6 +54,8 @@ class BookingServiceTest {
     private Optional<Product> optionalProduct;
     private Booking booking;
 
+    private User user;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -61,7 +64,7 @@ class BookingServiceTest {
 
     @Test
     void shouldReturnResponseEntityWhenCreateANewBooking() {
-        when(userRepository.findById(any())).thenReturn(optionalUser);
+        when(userRepository.findByEmail(any())).thenReturn(user);
         when(productRepository.findById(any())).thenReturn(optionalProduct);
         when(repository.carReservations(any(), any(), any())).thenReturn(List.of());
         when(repository.save(any())).thenReturn(booking);
@@ -74,8 +77,8 @@ class BookingServiceTest {
         assertEquals(String.valueOf(START_DATE), result.getStartDate());
         assertEquals(String.valueOf(END_DATE), result.getEndDate());
         assertEquals(START_TIME.format(DateTimeFormatter.ofPattern("HH:mm:ss")), result.getStartTime());
-        assertEquals(optionalUser.get().getId(), result.getUser().getId());
-        assertEquals(optionalProduct.get().getId(), result.getProduct().getId());
+        assertEquals(user.getId(), result.getUser().getId());
+        assertEquals(user.getId(), result.getProduct().getId());
     }
 
     @Test
@@ -106,13 +109,13 @@ class BookingServiceTest {
             fail("Should return a Exception");
         }catch (Exception ex){
             assertEquals(ResourceNotFoundException.class, ex.getClass());
-            assertEquals("Product not found", ex.getMessage());
+            assertEquals("User not found", ex.getMessage());
         }
     }
 
     @Test
     void shouldReturnLimitExceededExceptionWhenCarIsNotAvailableForBooking() {
-        when(userRepository.findById(any())).thenReturn(optionalUser);
+        when(userRepository.findByEmail(any())).thenReturn(user);
         when(productRepository.findById(any())).thenReturn(optionalProduct);
         when(repository.carReservations(any(), any(), any())).thenReturn(List.of(booking));
         when(repository.save(any())).thenReturn(booking);
@@ -248,10 +251,13 @@ class BookingServiceTest {
     }
 
     private void startSetup(){
-        bookingRequestDTO = new BookingRequestDTO(START_TIME, START_DATE, END_DATE, ID, ID);
+        bookingRequestDTO = new BookingRequestDTO(START_TIME, START_DATE, END_DATE, EMAIL, ID);
 
-        optionalUser = Optional.of(new User(ID, "Gabriel", "Gomes", "gabriel@hotmail.com",
+        optionalUser = Optional.of(new User(ID, "Gabriel", "Gomes", EMAIL,
                 "123", List.of("USERS")));
+
+        user = new User(ID, "Gabriel", "Gomes", EMAIL,
+                "123", List.of("USERS"));
 
         optionalProduct = Optional.of(new Product(ID, "Produto1", 0.0, INDEX, "produto novo",
                 null, null, List.of(new Classification(ID, ID, ID, 5.0)),

@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +34,7 @@ class BookingControllerTest {
     public static final LocalDate START_DATE        = LocalDate.of(2022, 6, 6);
     public static final LocalDate END_DATE          = LocalDate.of(2022, 6, 10);
     public static final int INDEX                   = 0;
+    public static final String EMAIL = "gabriel@hotmail.com";
 
     @InjectMocks
     private BookingController bookingController;
@@ -131,9 +133,9 @@ class BookingControllerTest {
     }
 
     private void startSetup() {
-        bookingRequestDTO = new BookingRequestDTO(START_TIME, START_DATE, END_DATE, ID, ID);
+        bookingRequestDTO = new BookingRequestDTO(START_TIME, START_DATE, END_DATE, EMAIL, ID);
 
-        User user = new User(ID, "Gabriel", "Gomes", "gabriel@hotmail.com",
+        User user = new User(ID, "Gabriel", "Gomes", EMAIL,
                 "123", List.of("USERS"));
 
         Product  product = new Product(ID, "Produto1", 0.0, INDEX, "produto novo",

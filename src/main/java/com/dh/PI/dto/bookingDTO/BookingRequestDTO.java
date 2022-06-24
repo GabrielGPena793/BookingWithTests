@@ -17,6 +17,6 @@ public class BookingRequestDTO {
     private LocalDateTime startTime;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Long userId;
+    private String email;
     private Long productId;
 }

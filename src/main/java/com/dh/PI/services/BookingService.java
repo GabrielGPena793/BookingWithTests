@@ -35,9 +35,9 @@ public class BookingService {
     @Transactional
     public BookingResponseDTO create(BookingRequestDTO bookingRequestDTO){
 
-        Optional<User> user = userRepository.findById(bookingRequestDTO.getUserId());
+        User user = userRepository.findByEmail(bookingRequestDTO.getEmail());
 
-        if (user.isEmpty()){
+        if (user == null){
             throw new ResourceNotFoundException("User not found");
         }
 
@@ -55,7 +55,7 @@ public class BookingService {
         Booking booking = new Booking();
         BeanUtils.copyProperties(bookingRequestDTO, booking);
 
-        booking.setUser(user.get());
+        booking.setUser(user);
         booking.setProduct(product.get());
 
         return new BookingResponseDTO(repository.save(booking));
