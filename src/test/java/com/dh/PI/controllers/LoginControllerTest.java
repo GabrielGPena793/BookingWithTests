@@ -56,6 +56,6 @@ class LoginControllerTest {
 
     public void setupStart(){
         login = new Login(EMAIL, PASSWORD);
-        session = new Session(LOGIN, PASSWORD);
+        session = new Session(1L, List.of("USERS") ,LOGIN, PASSWORD);
     }
 }
