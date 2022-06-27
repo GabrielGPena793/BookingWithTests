@@ -35,6 +35,8 @@ public class LoginService {
             //Estamos enviando um objeto Sessão para retornar mais informações do usuário
             Session session = new Session();
             session.setLogin(user.getName() + " " + user.getLastname());
+            session.setRole(user.getRoles());
+            session.setId(user.getId());
             //gerando token jwt e colocando na sessão para retornar ao cliente
             JWTObject jwtObject = new JWTObject();
             jwtObject.setIssuedAt(new Date(System.currentTimeMillis()));
