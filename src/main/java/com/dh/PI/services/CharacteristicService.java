@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CharacteristicService {
@@ -30,6 +31,12 @@ public class CharacteristicService {
         BeanUtils.copyProperties(characteristicsDTO, characteristic);
 
         return new CharacteristicsDTO(repository.save(characteristic));
+    }
+
+    public List<CharacteristicsDTO> findAll(){
+        return repository.findAll().stream()
+                .map(CharacteristicsDTO::new)
+                .collect(Collectors.toList());
     }
 
     public List<Characteristic> findAllByName(Set<String> characters){
