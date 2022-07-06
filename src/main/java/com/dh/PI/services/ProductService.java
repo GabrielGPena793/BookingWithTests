@@ -53,6 +53,7 @@ public class ProductService {
         BeanUtils.copyProperties(productRequestDTO, product);
         product.setCategory(categoryService.findByQualification(productRequestDTO.getCategory()));
         product.setCity(cityService.findByName(productRequestDTO.getCity()));
+        product.setImages(productRequestDTO.getImageDTOS().stream().map(Image::new).collect(Collectors.toList()));
 
         Product productModel = repository.save(product);
 

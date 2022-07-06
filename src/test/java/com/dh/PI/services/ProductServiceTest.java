@@ -364,7 +364,8 @@ class ProductServiceTest {
                 "Produto novo",
                 "Coupes",
                 "Recife",
-                List.of(productCharacteristicDTO)
+                List.of(productCharacteristicDTO),
+                List.of(new ImageDTO())
         );
 
         image = new Image(ID, "image.png");

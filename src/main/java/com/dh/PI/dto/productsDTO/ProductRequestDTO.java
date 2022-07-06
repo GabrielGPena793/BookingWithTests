@@ -1,5 +1,6 @@
 package com.dh.PI.dto.productsDTO;
 
+import com.dh.PI.dto.ImageDTO;
 import com.dh.PI.dto.ProductCharacteristicDTO;
 import com.dh.PI.model.Characteristic;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,6 @@ public class ProductRequestDTO implements Serializable {
     private String category;
     private String city;
     private List<ProductCharacteristicDTO> characteristics;
+    private List<ImageDTO> imageDTOS;
 
 }

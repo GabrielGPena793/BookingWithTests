@@ -330,7 +330,8 @@ class ProductControllerTest {
                 "Produto novo",
                 "Coupes",
                 "Recife",
-                List.of(productCharacteristicDTO)
+                List.of(productCharacteristicDTO),
+                List.of(new ImageDTO())
         );
         productResponseDTOPage = new PageImpl<>(List.of(productResponseDTO));
         scoreDTO = new ScoreDTO("gabriel@hotmail.com", 1L, 5.0);
