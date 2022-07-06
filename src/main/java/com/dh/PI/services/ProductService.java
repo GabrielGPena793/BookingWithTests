@@ -83,6 +83,7 @@ public class ProductService {
 
         productEntity.get().setCategory(categoryService.findByQualification(productRequestDTO.getCategory()));
         productEntity.get().setCity(cityService.findByName(productRequestDTO.getCity()));
+        productEntity.get().setImages(productRequestDTO.getImageDTOS().stream().map(Image::new).collect(Collectors.toList()));
 
         productRequestDTO.getCharacteristics().forEach(chars -> {
             ProductCharacteristic productCharacteristic = new ProductCharacteristic(chars.getDescription(),

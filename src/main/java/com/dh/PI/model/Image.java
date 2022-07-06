@@ -19,6 +19,7 @@ public class Image {
     private String url;
 
     public Image(ImageDTO imageDTO) {
+        this.id = imageDTO.getId();
         this.url = imageDTO.getUrl();
     }
 

@@ -354,6 +354,9 @@ class ProductServiceTest {
     }
 
     private void startSetup(){
+        image = new Image(ID, "image.png");
+        imageDTO = new ImageDTO(ID, "image.png");
+
         productCharacteristicDTO = new ProductCharacteristicDTO(NAME, "Corre muito", "motor.png");
         category = new Category(ID, QUALIFICATION, DESCRIPTION, IMAGE_URL);
         city = new City(null,  CITYNAME, COUNTRY, LONGITUDE, LATITUDE);
@@ -365,11 +368,8 @@ class ProductServiceTest {
                 "Coupes",
                 "Recife",
                 List.of(productCharacteristicDTO),
-                List.of(new ImageDTO())
+                List.of(imageDTO )
         );
-
-        image = new Image(ID, "image.png");
-        imageDTO = new ImageDTO(ID, "image.png");
 
         product = new Product(
                 ID, "Produto1",
