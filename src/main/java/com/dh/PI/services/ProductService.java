@@ -86,15 +86,13 @@ public class ProductService {
         productEntity.get().setCity(cityService.findByName(productRequestDTO.getCity()));
         productEntity.get().setImages(productRequestDTO.getImageDTOS().stream().map(Image::new).collect(Collectors.toList()));
 
-        Set<ProductCharacteristic> productCharacteristics = new HashSet<>();
+        productCharacteristicRepository.delelteAllProductCharacteristicFromOneProduct(productEntity.get().getId());
 
         productRequestDTO.getCharacteristics().forEach(chars -> {
             ProductCharacteristic productCharacteristic = new ProductCharacteristic(chars.getDescription(),
                     productEntity.get(), characteristicService.findByName(chars.getName()));
-            productCharacteristics.add(productCharacteristic);
-
+            productEntity.get().getProductCharacteristics().add(productCharacteristicRepository.save(productCharacteristic));
         });
-        productEntity.get().setProductCharacteristics(productCharacteristics);
 
         return new ProductResponseDTO(repository.save(productEntity.get()));
     }
