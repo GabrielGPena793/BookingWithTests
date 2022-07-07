@@ -86,7 +86,7 @@ public class ProductService {
         productEntity.get().setCity(cityService.findByName(productRequestDTO.getCity()));
         productEntity.get().setImages(productRequestDTO.getImageDTOS().stream().map(Image::new).collect(Collectors.toList()));
 
-        productCharacteristicRepository.delelteAllProductCharacteristicFromOneProduct(productEntity.get().getId());
+        productCharacteristicRepository.dropProductCharacteristicFromOneProduct(productEntity.get().getId());
 
         productRequestDTO.getCharacteristics().forEach(chars -> {
             ProductCharacteristic productCharacteristic = new ProductCharacteristic(chars.getDescription(),
