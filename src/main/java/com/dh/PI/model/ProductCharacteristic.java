@@ -1,5 +1,8 @@
 package com.dh.PI.model;
 
+import com.dh.PI.dto.ProductCharacteristicDTO;
+import com.dh.PI.dto.productsDTO.ProductRequestDTO;
+import com.dh.PI.dto.productsDTO.ProductResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +36,11 @@ public class ProductCharacteristic {
         this.product = productModel;
         this.characteristic = characteristic;
     }
+
+    public ProductCharacteristic(ProductRequestDTO productRequestDTO, Product product, Characteristic characteristic){
+        this.product = product;
+        this.description = productRequestDTO.getDescription();
+        this.characteristic = characteristic;
+    }
+
 }

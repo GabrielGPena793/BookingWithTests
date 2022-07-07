@@ -1,5 +1,6 @@
 package com.dh.PI.dto;
 
+import com.dh.PI.model.ProductCharacteristic;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

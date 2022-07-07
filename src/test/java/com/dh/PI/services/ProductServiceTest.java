@@ -144,7 +144,7 @@ class ProductServiceTest {
         assertEquals(ID, result.getCategory().getId());
         assertEquals(ID, result.getImages().get(0).getId());
         assertEquals("Motor", result.getCharacteristics().get(0).getName());
-        assertEquals("Corre muito", result.getCharacteristics().get(0).getDescription());
+        assertEquals("Produto novo", result.getCharacteristics().get(0).getDescription());
     }
 
     @Test
