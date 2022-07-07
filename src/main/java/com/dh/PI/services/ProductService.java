@@ -4,7 +4,10 @@ import com.dh.PI.dto.ImageDTO;
 import com.dh.PI.dto.productsDTO.ProductRequestDTO;
 import com.dh.PI.dto.productsDTO.ProductResponseDTO;
 import com.dh.PI.exceptions.ResourceNotFoundException;
-import com.dh.PI.model.*;
+import com.dh.PI.model.City;
+import com.dh.PI.model.Image;
+import com.dh.PI.model.Product;
+import com.dh.PI.model.ProductCharacteristic;
 import com.dh.PI.repositories.BookingRepository;
 import com.dh.PI.repositories.CityRepository;
 import com.dh.PI.repositories.ProductCharacteristicRepository;
@@ -72,8 +75,6 @@ public class ProductService {
     @Transactional
     public ProductResponseDTO update(ProductRequestDTO productRequestDTO){
         Optional<Product> productEntity = repository.findById(productRequestDTO.getId());
-        List<Characteristic> characteristic = productRequestDTO.getCharacteristics().stream().map(productCharacteristicDTO ->
-                characteristicService.findByName(productCharacteristicDTO.getName())).collect(Collectors.toList());
 
         if (productEntity.isEmpty()){
             throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_FOR_THIS_ID);
@@ -85,11 +86,15 @@ public class ProductService {
         productEntity.get().setCity(cityService.findByName(productRequestDTO.getCity()));
         productEntity.get().setImages(productRequestDTO.getImageDTOS().stream().map(Image::new).collect(Collectors.toList()));
 
-        Set<ProductCharacteristic> productCharacteristicsUpdated = characteristic.stream()
-                .map(characteristicDTO -> new ProductCharacteristic(productRequestDTO, productEntity.get(), characteristicDTO))
-                .collect(Collectors.toSet());
+        Set<ProductCharacteristic> productCharacteristics = new HashSet<>();
 
-        productEntity.get().setProductCharacteristics(productCharacteristicsUpdated);
+        productRequestDTO.getCharacteristics().forEach(chars -> {
+            ProductCharacteristic productCharacteristic = new ProductCharacteristic(chars.getDescription(),
+                    productEntity.get(), characteristicService.findByName(chars.getName()));
+            productCharacteristics.add(productCharacteristic);
+
+        });
+        productEntity.get().setProductCharacteristics(productCharacteristics);
 
         return new ProductResponseDTO(repository.save(productEntity.get()));
     }
