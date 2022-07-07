@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -85,13 +86,15 @@ public class ProductService {
         productEntity.get().setCity(cityService.findByName(productRequestDTO.getCity()));
         productEntity.get().setImages(productRequestDTO.getImageDTOS().stream().map(Image::new).collect(Collectors.toList()));
 
+        Set<ProductCharacteristic> productCharacteristicsUpdate = new HashSet<>();
         productRequestDTO.getCharacteristics().forEach(chars -> {
             ProductCharacteristic productCharacteristic = new ProductCharacteristic(chars.getDescription(),
                     productEntity.get(), characteristicService.findByName(chars.getName()));
 
-            productEntity.get().getProductCharacteristics().add(productCharacteristicRepository
+            productCharacteristicsUpdate.add(productCharacteristicRepository
                     .save(productCharacteristic));
         });
+        productEntity.get().setProductCharacteristics(productCharacteristicsUpdate);
 
         return new ProductResponseDTO(repository.save(productEntity.get()));
     }
